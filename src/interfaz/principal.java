@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -27,11 +29,130 @@ public class principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtDoceCuotas = new javax.swing.JTextField();
+        txtCuotaInicial = new javax.swing.JTextField();
+        txtTotalTerreno = new javax.swing.JTextField();
+        txtMetros = new javax.swing.JTextField();
+        cmdCalcular = new javax.swing.JButton();
+        cmdBorrar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("4. valor de las cuotas");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 240, 30));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Número de m2 comprados");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Total a pagar");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Cuota inicial");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setText("12 cuotas faltantes");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+
+        txtDoceCuotas.setEditable(false);
+        getContentPane().add(txtDoceCuotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 100, 30));
+
+        txtCuotaInicial.setEditable(false);
+        getContentPane().add(txtCuotaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 100, 30));
+
+        txtTotalTerreno.setEditable(false);
+        getContentPane().add(txtTotalTerreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 100, 30));
+
+        txtMetros.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMetrosKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtMetros, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 100, 30));
+
+        cmdCalcular.setText("Mostrar");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 293, 70, 30));
+
+        cmdBorrar.setText("Limpiar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 293, 70, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+double  tpagar, cinicial, cuotas12, faltante;
+float metros;
+String ttpagar, ciniciall, cuotas;
+
+if(txtMetros.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "Digite los m2 comprados","error", JOptionPane.ERROR_MESSAGE);  
+        txtMetros.requestFocusInWindow(); 
+         txtMetros.selectAll();    
+     }
+
+     else{
+     metros=Float.parseFloat(txtMetros.getText());    
+     
+     tpagar=(metros*80000);
+     cinicial=(tpagar*0.35);
+     faltante=(tpagar-cinicial);
+     cuotas12=(faltante/12);
+     
+      ttpagar=String.valueOf(tpagar);
+    txtTotalTerreno.setText (ttpagar);  
+    
+    ciniciall=String.valueOf(cinicial);
+    txtCuotaInicial.setText(ciniciall); 
+
+    cuotas=String.valueOf(cuotas12);
+    txtDoceCuotas.setText(cuotas);
+    
+     
+     }
+
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+     txtMetros.setText("");
+     txtCuotaInicial.setText("");
+     txtTotalTerreno.setText("");
+     txtDoceCuotas.setText("");
+     txtMetros.requestFocusInWindow();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void txtMetrosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMetrosKeyTyped
+char c=evt.getKeyChar(); 
+       
+          if(!Character.isDigit(c)&&evt.getKeyChar()!='.') {   
+            getToolkit().beep();    
+              evt.consume();   
+          }
+    if(evt.getKeyChar()=='.'&&txtMetros.getText().contains(".")){
+        evt.consume();
+    }         
+    }//GEN-LAST:event_txtMetrosKeyTyped
 
     /**
      * @param args the command line arguments
@@ -69,5 +190,16 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdBorrar;
+    private javax.swing.JButton cmdCalcular;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtCuotaInicial;
+    private javax.swing.JTextField txtDoceCuotas;
+    private javax.swing.JTextField txtMetros;
+    private javax.swing.JTextField txtTotalTerreno;
     // End of variables declaration//GEN-END:variables
 }
